@@ -1,0 +1,2367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifted Jannod Enterprise — ShopNow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Logo styles */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-svg {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+            animation: logoGlow 3s infinite alternate;
+        }
+        @keyframes logoGlow {
+            from {
+                filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+            }
+            to {
+                filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+            }
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            margin-left: 0.5rem;
+        }
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a237e;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+        .logo-subtitle {
+            font-size: 0.8rem;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ffeb3b 0%, #4caf50 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .black-friday-banner {
+            background: #000;
+            color: #ffd700;
+            text-align: center;
+            padding: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { background-color: #000; }
+            50% { background-color: #2c2c2c; }
+            100% { background-color: #000; }
+        }
+
+        .sale-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            color: #fff;
+        }
+
+        nav {
+            padding: 1rem;
+        }
+
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid #ffd700;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 0.5rem 1rem;
+            background: #ffd700;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .region-selector {
+            text-align: right;
+        }
+
+        .region-selector select {
+            padding: 0.5rem;
+            border: 1px solid #ffd700;
+            border-radius: 4px;
+            background: #2e7d32;
+            color: white;
+            cursor: pointer;
+            width: 200px;
+        }
+
+        .region-selector optgroup {
+            background: #fff;
+            color: #333;
+        }
+
+        .region-selector option {
+            padding: 0.5rem;
+            background: #fff;
+            color: #333;
+        }
+
+        .admin-access {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .admin-access input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .admin-access-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .payment-options {
+            margin-top: 2rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #2e7d32;
+            background: #f0f8f0;
+        }
+
+        .payment-method.selected {
+            border-color: #2e7d32;
+            background: #f0f8f0;
+        }
+
+        .payment-method i {
+            font-size: 1.2rem;
+            color: #2e7d32;
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            position: relative;
+            margin-left: 1rem;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .category-menu.show {
+            display: block;
+        }
+
+        .category-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .category-menu a:hover {
+            background-color: #f0f8f0;
+        }
+
+        .category-menu i {
+            width: 20px;
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        /* Seasonal Promotion Banner */
+        .seasonal-banner {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            text-align: center;
+            padding: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            animation: slide-in 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .seasonal-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            animation: shine 2s infinite;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine {
+            to {
+                left: 100%;
+            }
+        }
+
+        /* Product Category Label */
+        .category-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(46, 125, 50, 0.9);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* Seasonal Tag */
+        .seasonal-tag {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Product Details Modal */
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .product-modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .product-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-images {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin-top: 2rem;
+            border-top: 1px solid #ddd;
+            padding-top: 1rem;
+        }
+
+        .review-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .star-rating {
+            color: #ffd700;
+        }
+
+        /* Order Tracking */
+        .order-tracking {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .tracking-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .tracking-step.active {
+            color: #2e7d32;
+        }
+
+        .tracking-step::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #ddd;
+            border-radius: 50%;
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tracking-step.active::before {
+            background: #2e7d32;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        .products-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .black-friday-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .discount-price {
+            color: #ff0000;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .product-card h3 {
+            margin: 1rem 0;
+            color: #333;
+        }
+
+        .product-card .price {
+            color: #007bff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .product-card button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .product-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .cart-items {
+            margin: 1rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-total {
+            text-align: right;
+            margin-top: 2rem;
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        #checkout-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        #checkout-btn:hover {
+            background-color: #218838;
+        }
+
+        .cart-item button {
+            background-color: #dc3545;
+            color: yellow;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cart-item button:hover {
+            background-color: #c82333;
+        }
+
+        /* Login Styles */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #ffd700;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .nav-button:hover {
+            background-color: #ffed4a;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            margin: 2rem auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .login-btn:hover {
+            background-color: #45a049;
+        }
+
+        .form-footer {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Admin Dashboard Styles */
+        .admin-dashboard {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-management, .order-management {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        #userInfo {
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="black-friday-banner">
+            <div class="sale-text">
+                <span>BLACK FRIDAY SALE!</span>
+                <div class="countdown">
+                    <span id="countdown-timer">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="nav-top">
+                <div class="logo-container">
+                    <svg class="logo-svg" viewBox="0 0 100 100">
+                        <!-- Radial gradient for the illuminating light effect -->
+                        <defs>
+                            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#fff9c4" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#fff9c4" stop-opacity="0"/>
+                            </radialGradient>
+                            <!-- Gold metallic gradient -->
+                            <linearGradient id="goldEffect" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffd700"/>
+                                <stop offset="50%" stop-color="#ffeb3b"/>
+                                <stop offset="100%" stop-color="#ffd700"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Illuminating light behind -->
+                        <circle cx="50" cy="50" r="48" fill="url(#glow)"/>
+                        
+                        <!-- Wings -->
+                        <path d="M20,50 Q35,30 50,45 Q65,30 80,50" stroke="#ffd700" stroke-width="3" fill="none" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"/>
+                        <path d="M20,45 Q35,25 50,40 Q65,25 80,45" stroke="#ffd700" stroke-width="2" fill="none"/>
+                        
+                        <!-- Gift Hamper Base -->
+                        <rect x="30" y="45" width="40" height="30" rx="5" fill="#1a237e" filter="drop-shadow(2px 2px 3px rgba(0,0,0,0.3))"/>
+                        
+                        <!-- Ribbon -->
+                        <path d="M48,45 L52,45 L52,75 L48,75 Z" fill="url(#goldEffect)"/>
+                        <path d="M30,55 L70,55 L70,59 L30,59 Z" fill="url(#goldEffect)"/>
+                        
+                        <!-- Hamper Contents Suggestion -->
+                        <path d="M35,50 Q42,40 50,50 Q58,40 65,50" stroke="#ffd700" stroke-width="1.5" fill="none"/>
+                        
+                        <!-- GJ Text with metallic effect -->
+                        <text x="50" y="68" font-size="20" fill="url(#goldEffect)" text-anchor="middle" font-family="Arial" font-weight="bold" filter="drop-shadow(1px 1px 1px rgba(0,0,0,0.5))">GJ</text>
+                    </svg>
+                    <div class="logo-text">
+                        <span class="logo-title">Gifted Jannod Enterprise</span>
+                        <span class="logo-subtitle">ShopNow</span>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="category-nav">
+                    <button class="category-btn" onclick="toggleCategoryMenu()">
+                        <i class="fas fa-bars"></i> Categories
+                    </button>
+                    <div class="category-menu" id="categoryMenu">
+                        <a href="#" onclick="filterByCategory('kitchen')"><i class="fas fa-utensils"></i> Kitchen</a>
+                        <a href="#" onclick="filterByCategory('bedroom')"><i class="fas fa-bed"></i> Bedroom</a>
+                        <a href="#" onclick="filterByCategory('electronics')"><i class="fas fa-tv"></i> Electronics</a>
+                        <a href="#" onclick="filterByCategory('clothes')"><i class="fas fa-tshirt"></i> Clothes</a>
+                        <a href="#" onclick="filterByCategory('gaming')"><i class="fas fa-gamepad"></i> Gaming</a>
+                    </div>
+                </div>
+                <div class="nav-actions">
+                    <button id="loginBtn" class="nav-button">Client Login</button>
+                    <button id="adminLoginBtn" class="nav-button">Admin Login</button>
+                    <button id="request2faBtn" class="nav-button" style="display:none;">Request 2FA</button>
+                    <span id="userInfo" style="display: none;"></span>
+                    <div class="cart-icon">
+                        <span id="cart-count">0</span>
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="region-selector">
+                <select id="regionSelect" onchange="updateRegion()">
+                    <!-- Africa -->
+                    <optgroup label="Africa">
+                        <option value="NG">Nigeria</option>
+                        <option value="ZA">South Africa</option>
+                        <option value="KE">Kenya</option>
+                        <option value="EG">Egypt</option>
+                        <option value="GH">Ghana</option>
+                        <option value="MA">Morocco</option>
+                    </optgroup>
+                    <!-- Middle East -->
+                    <optgroup label="Middle East">
+                        <option value="AE">United Arab Emirates</option>
+                        <option value="SA">Saudi Arabia</option>
+                        <option value="QA">Qatar</option>
+                        <option value="KW">Kuwait</option>
+                        <option value="BH">Bahrain</option>
+                    </optgroup>
+                    <!-- Asia -->
+                    <optgroup label="Asia">
+                        <option value="CN">China</option>
+                        <option value="JP">Japan</option>
+                        <option value="KR">South Korea</option>
+                        <option value="IN">India</option>
+                        <option value="SG">Singapore</option>
+                        <option value="MY">Malaysia</option>
+                    </optgroup>
+                    <!-- Other Regions -->
+                    <optgroup label="Other Regions">
+                        <option value="US">United States</option>
+                        <option value="EU">Europe</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                    </optgroup>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Client Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Client Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                <p class="form-footer">
+                    Don't have an account? <a href="#" id="registerLink">Register</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <h2>Admin Dashboard</h2>
+        <div class="admin-controls">
+            <div class="product-management">
+                <h3>Product Management</h3>
+                <button onclick="showAddProductForm()">Add New Product</button>
+                <div id="productList"></div>
+            </div>
+            <div class="order-management">
+                <h3>Order Management</h3>
+                <div id="orderList"></div>
+            </div>
+        </div>
+        <div id="pending2faList" style="margin-top:1rem;"></div>
+    </div>
+
+    <main>
+        <section class="products-container" id="products">
+            <!-- Products will be dynamically loaded here -->
+        </section>
+
+        <section class="cart-container" id="cart">
+            <h2>Shopping Cart</h2>
+            <div class="cart-items">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+                <div class="cart-total">
+                <h3>Total: <span id="currency-symbol">$</span><span id="total-amount">0</span></h3>
+                <button id="checkout-btn">Checkout</button>
+            </div>
+
+            <!-- Checkout / Payment Area -->
+            <div id="checkout-area" style="display:none; margin-top:1.5rem;">
+                <h3>Checkout</h3>
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city">
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">ZIP Code</label>
+                    <input type="text" id="zipCode">
+                </div>
+
+                <div class="payment-options" id="checkoutPaymentOptions">
+                    <!-- Region-specific payment methods will be injected here by updatePaymentMethods() -->
+                </div>
+
+                <div id="mobilePaymentFields" style="display:none; margin-top:1rem;">
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone number (for mobile payments / STK push)</label>
+                        <input type="tel" id="phoneNumber" placeholder="e.g. +254712345678">
+                    </div>
+                </div>
+
+                <div style="margin-top:1rem;">
+                    <button id="payNowBtn" class="login-btn">Pay Now</button>
+                </div>
+
+                <div id="paymentStatus" style="margin-top:1rem; display:none;"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // User Management
+        let currentUser = null;
+        let isAdmin = false;
+
+        // Sample admin credentials
+        const adminCredentials = {
+            username: 'admin',
+            password: 'admin123'
+        };
+
+        // Sample registered users (kept for offline demo fallback)
+        const registeredUsers = [
+            { email: 'user@example.com', password: 'user123' }
+        ];
+
+        // Optional: set your reCAPTCHA site key here to enable verification on register
+        const RECAPTCHA_SITE_KEY = '';
+        if (RECAPTCHA_SITE_KEY) {
+            const s = document.createElement('script');
+            s.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+            document.head.appendChild(s);
+        }
+
+        // Login Modal Management
+        const loginModal = document.getElementById('loginModal');
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const loginBtn = document.getElementById('loginBtn');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const userInfo = document.getElementById('userInfo');
+        const adminDashboard = document.getElementById('adminDashboard');
+
+        // Clicking the userInfo (when logged in) shows the user's orders
+        userInfo.addEventListener('click', () => {
+            if (currentUser && currentUser.email) showUserOrders();
+        });
+
+        loginBtn.onclick = () => loginModal.style.display = 'block';
+        adminLoginBtn.onclick = () => adminLoginModal.style.display = 'block';
+
+        // Close modals when clicking outside
+        window.onclick = (event) => {
+            if (event.target === loginModal) loginModal.style.display = 'none';
+            if (event.target === adminLoginModal) adminLoginModal.style.display = 'none';
+        };
+
+        // Close buttons
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.onclick = function() {
+                loginModal.style.display = 'none';
+                adminLoginModal.style.display = 'none';
+            };
+        });
+
+        // Client Login Form - attempt backend login, fallback to local users
+        document.getElementById('loginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                if (!res.ok) throw new Error('Invalid credentials');
+                const data = await res.json();
+                if (data.twoFactorRequired) {
+                    // server indicates 2FA is enabled for this account
+                    if (data.otp) alert('Demo OTP: ' + data.otp);
+                    const otp = prompt('Enter the 2FA code you received:');
+                    if (!otp) return alert('OTP required');
+                    const vr = await fetch('http://localhost:3000/api/auth/verify-otp', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: document.getElementById('email').value, otp })
+                    });
+                    if (!vr.ok) return alert('OTP verification failed');
+                    const vdata = await vr.json();
+                    currentUser = { email: vdata.email };
+                } else {
+                    currentUser = { email: data.email };
+                }
+                userInfo.textContent = `Welcome, ${currentUser.email}`;
+                userInfo.style.display = 'inline';
+                request2faBtn.style.display = 'inline';
+                loginBtn.style.display = 'none';
+                loginModal.style.display = 'none';
+                alert('Login successful!');
+            } catch (err) {
+                // fallback to local users
+                const user = registeredUsers.find(u => u.email === email && u.password === password);
+                if (user) {
+                    currentUser = { email: user.email };
+                    userInfo.textContent = `Welcome, ${user.email}`;
+                    userInfo.style.display = 'inline';
+                    request2faBtn.style.display = 'inline';
+                    loginBtn.style.display = 'none';
+                    loginModal.style.display = 'none';
+                    alert('Login successful (local)!');
+                } else {
+                    alert('Invalid credentials!');
+                }
+            }
+        };
+
+        // Admin Login Form - local check then show admin dashboard and load orders from backend
+        document.getElementById('adminLoginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                isAdmin = true;
+                currentUser = { username: 'Admin' };
+                userInfo.textContent = 'Admin Panel';
+                userInfo.style.display = 'inline';
+                adminLoginBtn.style.display = 'none';
+                adminLoginModal.style.display = 'none';
+                adminDashboard.style.display = 'block';
+                document.getElementById('products').style.display = 'none';
+                document.getElementById('cart').style.display = 'none';
+                alert('Admin login successful!');
+                // Load orders from backend
+                await loadAdminOrders();
+                await loadPending2FA();
+            } else {
+                alert('Invalid admin credentials!');
+            }
+        };
+
+        // Registration Link - call backend register endpoint
+        document.getElementById('registerLink').onclick = async (e) => {
+            e.preventDefault();
+            const email = prompt('Enter your email:');
+            const password = prompt('Enter your password:');
+            if (!email || !password) return alert('Email and password required');
+            try {
+                let recaptchaToken = null;
+                if (RECAPTCHA_SITE_KEY && window.grecaptcha) {
+                    try {
+                        await grecaptcha.ready();
+                        recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'register' });
+                    } catch (e) {
+                        console.warn('reCAPTCHA execute failed', e);
+                    }
+                }
+
+                const res = await fetch('http://localhost:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, recaptchaToken })
+                });
+                    if (res.ok) {
+                        alert('Registration successful! Please log in.');
+                    } else {
+                        const data = await res.json();
+                        alert('Registration failed: ' + (data.error || res.statusText));
+                    }
+            } catch (err) {
+                // fallback local
+                registeredUsers.push({ email, password });
+                alert('Registration saved locally (backend not reachable). Please log in.');
+            }
+        };
+
+            // Request 2FA button handler
+            const request2faBtn = document.getElementById('request2faBtn');
+            request2faBtn.addEventListener('click', requestTwoFactor);
+
+            async function requestTwoFactor() {
+                if (!currentUser || !currentUser.email) return alert('Please log in first');
+                const password = prompt('Please re-enter your password to request 2FA:');
+                if (!password) return;
+                try {
+                    const res = await fetch('http://localhost:3000/api/auth/request-2fa', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: currentUser.email, password })
+                    });
+                        const data = await res.json();
+                        if (!res.ok) return alert('Request failed: ' + (data.error || res.statusText));
+                        alert(data.message || 'Two-factor requested. An admin must approve.');
+                } catch (err) {
+                    alert('Error requesting 2FA: ' + err.message);
+                }
+            }
+
+        // Admin Functions
+        function showAddProductForm() {
+            const modalHtml = `
+                <div class="modal-content" style="max-width: 600px;">
+                    <h3>Add New Product</h3>
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Price ($)</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productOriginalPrice">Original Price ($)</label>
+                        <input type="number" id="productOriginalPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Description</label>
+                        <textarea id="productDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Product Image</label>
+                        <input type="file" id="productImage" accept="image/*" required>
+                        <img id="imagePreview" style="max-width: 200px; display: none; margin-top: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isBlackFriday">
+                            Black Friday Deal
+                        </label>
+                    </div>
+                    <button onclick="submitNewProduct()" class="login-btn">Add Product</button>
+                </div>
+            `;
+
+            const modalContainer = document.createElement('div');
+            modalContainer.className = 'modal';
+            modalContainer.style.display = 'block';
+            modalContainer.innerHTML = modalHtml;
+            document.body.appendChild(modalContainer);
+
+            // Image preview
+            document.getElementById('productImage').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('imagePreview');
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Close modal when clicking outside
+            modalContainer.addEventListener('click', function(e) {
+                if (e.target === modalContainer) {
+                    modalContainer.remove();
+                }
+            });
+        }
+
+        function submitNewProduct() {
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const originalPrice = parseFloat(document.getElementById('productOriginalPrice').value);
+            const description = document.getElementById('productDescription').value;
+            const imageFile = document.getElementById('productImage').files[0];
+            const isBlackFriday = document.getElementById('isBlackFriday').checked;
+
+            if (name && price && description && imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newProduct = {
+                        id: products.length + 1,
+                        name,
+                        price,
+                        originalPrice,
+                        description,
+                        image: e.target.result,
+                        blackFriday: isBlackFriday
+                    };
+                    products.push(newProduct);
+                    displayProducts();
+                    document.querySelector('.modal').remove();
+                    alert('Product added successfully!');
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                alert('Please fill in all fields and upload an image');
+            }
+        }
+
+        // Seasonal Promotions
+        const seasonalPromotions = {
+            christmas: {
+                start: new Date('2025-12-01'),
+                end: new Date('2025-12-26'),
+                discount: 25,
+                banner: '🎄 Christmas Sale! 25% Off 🎄'
+            },
+            newYear: {
+                start: new Date('2025-12-26'),
+                end: new Date('2026-01-05'),
+                discount: 30,
+                banner: '🎉 New Year Sale! 30% Off 🎉'
+            },
+            halloween: {
+                start: new Date('2025-10-20'),
+                end: new Date('2025-11-01'),
+                discount: 20,
+                banner: '🎃 Halloween Sale! 20% Off 👻'
+            }
+        };
+
+        // Sample product data
+        const products = [
+            // Kitchen Items
+            {
+                id: 1,
+                name: 'Smart Coffee Maker',
+                price: 129.99,
+                originalPrice: 159.99,
+                image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=300',
+                description: 'Programmable coffee maker with mobile app control',
+                category: 'kitchen',
+                seasonal: ['christmas', 'newYear']
+            },
+            {
+                id: 2,
+                name: 'Professional Knife Set',
+                price: 199.99,
+                originalPrice: 249.99,
+                image: 'https://images.unsplash.com/photo-1593618998160-c0d77127712d?w=300',
+                description: 'Premium 15-piece kitchen knife set with block',
+                category: 'kitchen'
+            },
+            // Bedroom Items
+            {
+                id: 3,
+                name: 'Memory Foam Mattress',
+                price: 699.99,
+                originalPrice: 899.99,
+                image: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=300',
+                description: 'Queen size memory foam mattress with cooling technology',
+                category: 'bedroom',
+                seasonal: ['newYear']
+            },
+            {
+                id: 4,
+                name: 'Smart LED Bedside Lamp',
+                price: 49.99,
+                originalPrice: 69.99,
+                image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=300',
+                description: 'Voice-controlled lamp with multiple color options',
+                category: 'bedroom'
+            },
+            // Electronics
+            {
+                id: 5,
+                name: '65" 4K Smart TV',
+                price: 999.99,
+                originalPrice: 1299.99,
+                image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300',
+                description: 'Ultra HD Smart TV with voice control',
+                category: 'electronics',
+                seasonal: ['christmas', 'newYear']
+            },
+            {
+                id: 6,
+                name: 'Wireless Earbuds',
+                price: 129.99,
+                originalPrice: 159.99,
+                image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300',
+                description: 'True wireless earbuds with noise cancellation',
+                category: 'electronics'
+            },
+            // Clothes
+            {
+                id: 7,
+                name: 'Winter Jacket',
+                price: 89.99,
+                originalPrice: 119.99,
+                image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=300',
+                description: 'Waterproof winter jacket with thermal lining',
+                category: 'clothes',
+                seasonal: ['christmas']
+            },
+            {
+                id: 8,
+                name: 'Halloween Costume',
+                price: 49.99,
+                originalPrice: 69.99,
+                image: 'https://images.unsplash.com/photo-1509558741973-0cd3cf2f2f17?w=300',
+                description: 'High-quality Halloween costume',
+                category: 'clothes',
+                seasonal: ['halloween']
+            },
+            // Gaming
+            {
+                id: 9,
+                name: 'Gaming Console',
+                price: 499.99,
+                originalPrice: 599.99,
+                image: 'https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=300',
+                description: 'Next-gen gaming console with 4K gaming',
+                category: 'gaming',
+                seasonal: ['christmas', 'newYear']
+            },
+            {
+                id: 10,
+                name: 'Gaming Chair',
+                price: 199.99,
+                originalPrice: 249.99,
+                image: 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=300',
+                description: 'Ergonomic gaming chair with lumbar support',
+                category: 'gaming'
+            },
+            {
+                id: 11,
+                name: 'Gaming Headset',
+                price: 79.99,
+                originalPrice: 99.99,
+                image: 'https://images.unsplash.com/photo-1600186279172-fca19b43cf7e?w=300',
+                description: '7.1 surround sound gaming headset',
+                category: 'gaming'
+            }
+        ];
+
+        // Shopping cart array
+        let cart = [];
+
+        // DOM Elements
+        const productsContainer = document.getElementById('products');
+        const cartItems = document.querySelector('.cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const totalAmount = document.getElementById('total-amount');
+        const checkoutBtn = document.getElementById('checkout-btn');
+
+        // Black Friday Countdown Timer
+        function updateCountdown() {
+            const blackFriday = new Date('2025-11-29T00:00:00'); // Black Friday 2025
+            const now = new Date();
+            const difference = blackFriday - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown-timer').innerHTML = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s until Black Friday deals end!`;
+            } else {
+                document.getElementById('countdown-timer').innerHTML = "Black Friday is here!";
+            }
+        }
+
+        // Start countdown
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Display products (shows prices converted to selected region currency)
+        function displayProducts(filterCategory = null) {
+            const region = document.getElementById('regionSelect').value;
+            const cfg = regionConfig[region] || { symbol: '$' };
+
+            // show seasonal banners if any (banner area updated elsewhere)
+            productsContainer.innerHTML = products
+                .filter(p => !filterCategory || p.category === filterCategory)
+                .map(product => {
+                    const seasonalDiscount = getSeasonalDiscount(product);
+                    const basePrice = product.price;
+                    const original = product.originalPrice || product.price;
+                    const discounted = seasonalDiscount > 0 ? (basePrice * (1 - seasonalDiscount / 100)) : basePrice;
+
+                    const localPrice = convertPrice(discounted);
+                    const localOriginal = convertPrice(original);
+
+                    return `
+                    <div class="product-card">
+                        <div class="category-label">${product.category}</div>
+                        ${seasonalDiscount > 0 ? `<div class="seasonal-tag">${seasonalDiscount}% OFF!</div>` : ''}
+                        ${product.blackFriday ? '<div class="black-friday-tag">BLACK FRIDAY DEAL!</div>' : ''}
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="product-brief">${product.description.substring(0, 100)}...</p>
+                        ${seasonalDiscount > 0 ? `
+                            <p class="original-price">Original: ${cfg.symbol}${localOriginal.toFixed(2)}</p>
+                            <p class="discount-price">Now: ${cfg.symbol}${localPrice.toFixed(2)}</p>
+                        ` : `
+                            <p class="price">${cfg.symbol}${localPrice.toFixed(2)}</p>
+                        `}
+                        <div class="product-card-actions">
+                            <button onclick="addToCart(${product.id})" class="add-to-cart-btn">Add to Cart</button>
+                            <button onclick="showProductDetails(${product.id})" class="details-btn">Quick View</button>
+                        </div>
+                        <div class="product-rating">
+                            <div class="stars">${getStarRating(product.rating || 0)}</div>
+                            <span>(${product.reviews ? product.reviews.length : 0} reviews)</span>
+                        </div>
+                    </div>
+                `;
+                }).join('');
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+
+            updateCart();
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Update cart
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            // Update cart items display
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p>Quantity: ${item.quantity}</p>
+                        <p>${(function(){
+                            const region = document.getElementById('regionSelect').value;
+                            const cfg = regionConfig[region] || { symbol: '$' };
+                            return cfg.symbol + (convertPrice(item.price * item.quantity)).toFixed(2);
+                        })()}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})">Remove</button>
+                </div>
+            `).join('');
+
+            // Update total amount (show in selected region currency)
+            const totalUSD = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const region = document.getElementById('regionSelect').value;
+            const cfg = regionConfig[region] || { symbol: '$' };
+            const totalLocal = convertPrice(totalUSD);
+            // update currency symbol
+            const symbolEl = document.getElementById('currency-symbol');
+            if (symbolEl) symbolEl.textContent = cfg.symbol;
+            totalAmount.textContent = totalLocal.toFixed(2);
+        }
+
+        // Checkout and payment handling
+        let selectedPaymentMethod = null;
+
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // show checkout area and populate payment methods for selected region
+            document.getElementById('checkout-area').style.display = 'block';
+            // ensure payment methods reflect region
+            const region = document.getElementById('regionSelect').value;
+            updateRegion();
+            document.getElementById('paymentStatus').style.display = 'none';
+            // scroll to checkout area
+            document.getElementById('checkout-area').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Select payment method
+        function selectPayment(method, el) {
+            selectedPaymentMethod = method;
+            // mark selected
+            document.querySelectorAll('#checkoutPaymentOptions .payment-method').forEach(pm => pm.classList.remove('selected'));
+            if (el) el.classList.add('selected');
+
+            // show phone field for mobile payment methods
+            const region = document.getElementById('regionSelect').value;
+            const cfg = regionConfig[region] || { mobilePayments: [] };
+            const needsPhone = (cfg.mobilePayments && cfg.mobilePayments.includes(method)) || /M-Pesa|MTN|Airtel|Mobile|Paynow|Alipay|WeChat|STC/i.test(method);
+            document.getElementById('mobilePaymentFields').style.display = needsPhone ? 'block' : 'none';
+        }
+
+        // Simulate STK push / mobile payment by calling backend simulation endpoint
+        async function simulateSTKPush(phone, amount, orderId) {
+            const statusEl = document.getElementById('paymentStatus');
+            statusEl.style.display = 'block';
+            statusEl.innerHTML = `<p>Initiating STK push to <strong>${phone}</strong> for <strong>${amount}</strong> (Order ${orderId})...</p>`;
+
+            try {
+                const res = await fetch('http://localhost:3000/api/payments/stk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, amount, orderId })
+                });
+
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    statusEl.innerHTML += `<p style="color:red;">Failed to initiate STK push: ${data.error || res.statusText}</p>`;
+                    finalizeOrderPayment(orderId, 'failed');
+                    return;
+                }
+
+                statusEl.innerHTML += `<p>STK push initiated (simulated). Waiting for network confirmation...</p>`;
+
+                // Backend will mark order paid after a short delay (simulated). Poll for status a few times.
+                const start = Date.now();
+                const timeout = 10000; // 10s
+                while (Date.now() - start < timeout) {
+                    await new Promise(r => setTimeout(r, 1500));
+                    try {
+                        const orderRes = await fetch(`http://localhost:3000/api/orders/${orderId}`);
+                        if (orderRes.ok) {
+                            const orderData = await orderRes.json();
+                            if (orderData.status === 'paid') {
+                                statusEl.innerHTML += `<p style="color:green;">Payment confirmed by mobile provider.</p>`;
+                                finalizeOrderPayment(orderId, 'paid');
+                                return;
+                            }
+                        }
+                    } catch (e) { /* ignore and retry */ }
+                }
+
+                statusEl.innerHTML += `<p style="color:red;">Payment not confirmed within time window.</p>`;
+                finalizeOrderPayment(orderId, 'failed');
+            } catch (err) {
+                statusEl.innerHTML += `<p style="color:red;">Error initiating STK push: ${err.message}</p>`;
+                finalizeOrderPayment(orderId, 'failed');
+            }
+        }
+
+        async function finalizeOrderPayment(orderId, status) {
+            // refresh order from backend (if available) and update UI
+            try {
+                const res = await fetch(`http://localhost:3000/api/orders/${orderId}`);
+                if (res.ok) {
+                    const orderData = await res.json();
+                    // update local cache
+                    const idx = orders.findIndex(o => o.id === orderId);
+                    if (idx >= 0) orders[idx] = orderData;
+                    else orders.push(orderData);
+                    if (orderData.status === 'paid' || status === 'paid') {
+                        // show tracking modal
+                        showOrderTracking(orderId);
+                        return;
+                    }
+                }
+            } catch (err) {
+                // if fetching fails, fall back to local
+            }
+
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            order.status = status === 'paid' ? 'paid' : 'payment_failed';
+            if (status === 'paid') {
+                order.tracking.steps[1].completed = true;
+                order.tracking.steps[1].date = new Date().toISOString();
+                showOrderTracking(orderId);
+            }
+        }
+
+        // Process payment when user clicks Pay Now (now integrated with backend)
+        document.getElementById('payNowBtn').addEventListener('click', async () => {
+            if (cart.length === 0) { alert('Cart is empty'); return; }
+            if (!selectedPaymentMethod) { alert('Please select a payment method'); return; }
+
+            const fullName = document.getElementById('fullName').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const zipCode = document.getElementById('zipCode').value;
+            if (!fullName || !address || !city || !zipCode) { alert('Please fill shipping details'); return; }
+
+            const region = document.getElementById('regionSelect').value;
+            const amount = parseFloat(totalAmount.textContent) || 0;
+
+            const phone = document.getElementById('phoneNumber').value;
+            const cfg = regionConfig[region] || { mobilePayments: [] };
+            const isMobileMethod = (cfg.mobilePayments && cfg.mobilePayments.includes(selectedPaymentMethod)) || /M-Pesa|MTN|Airtel|Mobile|Paynow|Alipay|WeChat|STC/i.test(selectedPaymentMethod);
+
+            if (isMobileMethod) {
+                if (!phone) { alert('Please enter phone number for mobile payment'); return; }
+                if (!validatePhone(region, phone)) { alert('Phone format invalid for selected region'); return; }
+            }
+
+            // Create order on backend
+            const shipping = { fullName, address, city, zipCode, phone };
+            const orderId = await createOrder(cart, region, shipping);
+            if (!orderId) return;
+
+            if (isMobileMethod) {
+                await simulateSTKPush(phone, amount, orderId);
+            } else {
+                // For non-mobile, call backend simulated STK endpoint to mark payment (demo).
+                document.getElementById('paymentStatus').style.display = 'block';
+                document.getElementById('paymentStatus').innerHTML = `<p>Processing ${selectedPaymentMethod} payment...</p>`;
+                try {
+                    const res = await fetch('http://localhost:3000/api/payments/stk', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: phone || '', amount, orderId })
+                    });
+                    if (res.ok) {
+                        document.getElementById('paymentStatus').innerHTML += `<p style="color:green;">Payment simulated and accepted.</p>`;
+                        // poll or refresh
+                        await new Promise(r => setTimeout(r, 1200));
+                        await finalizeOrderPayment(orderId, 'paid');
+                    } else {
+                        document.getElementById('paymentStatus').innerHTML += `<p style="color:red;">Payment failed on server.</p>`;
+                        await finalizeOrderPayment(orderId, 'failed');
+                    }
+                } catch (err) {
+                    document.getElementById('paymentStatus').innerHTML += `<p style="color:red;">Payment error: ${err.message}</p>`;
+                    await finalizeOrderPayment(orderId, 'failed');
+                }
+            }
+
+            // Clear cart locally
+            cart = [];
+            updateCart();
+            document.getElementById('checkout-area').style.display = 'none';
+        });
+
+        // Search functionality
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            displayFilteredProducts(filteredProducts);
+        }
+
+        function displayFilteredProducts(filteredProducts) {
+            if (!filteredProducts || filteredProducts.length === 0) {
+                productsContainer.innerHTML = '<div class="no-results">No products found</div>';
+                return;
+            }
+
+            const region = document.getElementById('regionSelect').value;
+            const cfg = regionConfig[region] || { symbol: '$' };
+
+            productsContainer.innerHTML = filteredProducts.map(product => {
+                const seasonalDiscount = getSeasonalDiscount(product);
+                const basePrice = product.price;
+                const original = product.originalPrice || product.price;
+                const discounted = seasonalDiscount > 0 ? (basePrice * (1 - seasonalDiscount / 100)) : basePrice;
+
+                const localPrice = convertPrice(discounted);
+                const localOriginal = convertPrice(original);
+
+                return `
+                    <div class="product-card">
+                        ${product.blackFriday ? '<div class="black-friday-tag">BLACK FRIDAY DEAL!</div>' : ''}
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="product-brief">${product.description.substring(0, 100)}...</p>
+                        ${seasonalDiscount > 0 ? `
+                            <p class="original-price">Original: ${cfg.symbol}${localOriginal.toFixed(2)}</p>
+                            <p class="discount-price">Now: ${cfg.symbol}${localPrice.toFixed(2)}</p>
+                        ` : `
+                            <p class="price">${cfg.symbol}${localPrice.toFixed(2)}</p>
+                        `}
+                        <div class="product-card-actions">
+                            <button onclick="addToCart(${product.id})" class="add-to-cart-btn">Add to Cart</button>
+                            <button onclick="showProductDetails(${product.id})" class="details-btn">Quick View</button>
+                        </div>
+                        <div class="product-rating">
+                            <div class="stars">${getStarRating(product.rating || 0)}</div>
+                            <span>(${product.reviews ? product.reviews.length : 0} reviews)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Star rating helper
+        function getStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - Math.ceil(rating);
+            
+            return `${'★'.repeat(fullStars)}${halfStar ? '½' : ''}${'☆'.repeat(emptyStars)}`;
+        }
+
+        // Product details and reviews
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.createElement('div');
+            modal.className = 'product-modal';
+            modal.style.display = 'block';
+            
+            modal.innerHTML = `
+                <div class="product-modal-content">
+                    <span class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <div class="product-details">
+                        <div class="product-images">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="product-info">
+                            <h2>${product.name}</h2>
+                            <p class="full-description">${product.description}</p>
+                            ${(() => {
+                                const region = document.getElementById('regionSelect').value;
+                                const cfg = regionConfig[region] || { symbol: '$' };
+                                const seasonalDiscount = getSeasonalDiscount(product);
+                                const basePrice = product.price;
+                                const original = product.originalPrice || product.price;
+                                const discounted = seasonalDiscount > 0 ? (basePrice * (1 - seasonalDiscount / 100)) : basePrice;
+                                const localPrice = convertPrice(discounted);
+                                const localOriginal = convertPrice(original);
+                                if (seasonalDiscount > 0) {
+                                    return `\n                                <p class=\"original-price\">Original: ${cfg.symbol}${localOriginal.toFixed(2)}</p>\n                                 <p class=\"discount-price\">Now: ${cfg.symbol}${localPrice.toFixed(2)}</p>`;
+                                }
+                                return `<p class=\"price\">${cfg.symbol}${localPrice.toFixed(2)}</p>`;
+                            })()}
+                            <button onclick="addToCart(${product.id})" class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="reviews-section">
+                        <h3>Customer Reviews</h3>
+                        ${renderReviews(product)}
+                        ${currentUser ? `
+                            <button onclick="showReviewForm(${product.id})" class="review-btn">Write a Review</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function renderReviews(product) {
+            if (!product.reviews || product.reviews.length === 0) {
+                return '<p>No reviews yet</p>';
+            }
+            
+            return product.reviews.map(review => `
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer">${review.userName}</span>
+                        <div class="star-rating">${getStarRating(review.rating)}</div>
+                    </div>
+                    <p class="review-text">${review.comment}</p>
+                    <span class="review-date">${review.date}</span>
+                </div>
+            `).join('');
+        }
+
+        function showReviewForm(productId) {
+            const reviewForm = document.createElement('div');
+            reviewForm.className = 'review-form';
+            reviewForm.innerHTML = `
+                <h4>Write Your Review</h4>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select id="reviewRating">
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Comment</label>
+                    <textarea id="reviewComment" required></textarea>
+                </div>
+                <button onclick="submitReview(${productId})" class="submit-review-btn">Submit Review</button>
+            `;
+            
+            document.querySelector('.reviews-section').appendChild(reviewForm);
+        }
+
+        function submitReview(productId) {
+            const rating = parseFloat(document.getElementById('reviewRating').value);
+            const comment = document.getElementById('reviewComment').value;
+            
+            if (!comment) {
+                alert('Please write a review comment');
+                return;
+            }
+            
+            const product = products.find(p => p.id === productId);
+            if (!product.reviews) product.reviews = [];
+            
+            product.reviews.push({
+                userName: currentUser.email,
+                rating,
+                comment,
+                date: new Date().toLocaleDateString()
+            });
+            
+            // Update average rating
+            product.rating = product.reviews.reduce((sum, review) => sum + review.rating, 0) / product.reviews.length;
+            
+            // Refresh the product details view
+            document.querySelector('.product-modal').remove();
+            showProductDetails(productId);
+        }
+
+        // Order tracking (local cache of orders retrieved/created via backend)
+        let orders = [];
+
+        // Phone validation patterns (frontend mirror of backend patterns)
+        const phoneValidators = {
+            NG: /^((\+?234)|0)?[789][01]\d{8}$/,
+            KE: /^(?:\+?254|0)?7\d{8}$/,
+            ZA: /^(?:\+?27|0)6\d{8}$/,
+            IN: /^(?:\+?91|0)?[6-9]\d{9}$/,
+            AE: /^(?:\+?971|0)?5\d{8}$/,
+            SA: /^(?:\+?966|0)?5\d{8}$/
+        };
+
+        function validatePhone(region, phone) {
+            if (!phone) return false;
+            const re = phoneValidators[region];
+            if (!re) return true; // no validator for region -> accept
+            return re.test(phone);
+        }
+
+        // Create order on backend and return orderId (async)
+        async function createOrder(cartItems, region, shipping = {}) {
+            try {
+                const payload = {
+                    items: cartItems.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
+                    region,
+                    fullName: shipping.fullName || '',
+                    address: shipping.address || '',
+                    city: shipping.city || '',
+                    zipCode: shipping.zipCode || '',
+                    paymentMethod: selectedPaymentMethod,
+                    phone: shipping.phone || '',
+                    userEmail: currentUser && currentUser.email ? currentUser.email : null
+                };
+
+                const res = await fetch('http://localhost:3000/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    throw new Error(data.error || 'Failed to create order');
+                }
+
+                const data = await res.json();
+                const orderId = data.orderId;
+
+                // Add lightweight local representation (frontend cache)
+                const order = {
+                    id: orderId,
+                    items: payload.items,
+                    status: 'pending_payment',
+                    region,
+                    date: new Date().toISOString(),
+                    tracking: {
+                        steps: [
+                            { name: 'Order Placed', completed: true, date: new Date().toISOString() },
+                            { name: 'Processing', completed: false },
+                            { name: 'Shipped', completed: false },
+                            { name: 'Out for Delivery', completed: false },
+                            { name: 'Delivered', completed: false }
+                        ]
+                    }
+                };
+                orders.push(order);
+                return orderId;
+            } catch (err) {
+                alert('Order creation failed: ' + err.message);
+                return null;
+            }
+        }
+
+        async function showOrderTracking(orderId) {
+            // try to fetch freshest order from backend
+            try {
+                const res = await fetch(`http://localhost:3000/api/orders/${orderId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const order = data;
+                    const modal = document.createElement('div');
+                    modal.className = 'product-modal';
+                    modal.style.display = 'block';
+                    modal.innerHTML = `
+                        <div class="product-modal-content">
+                            <span class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                            <div class="order-tracking">
+                                <h2>Order Tracking - ${order.id}</h2>
+                                <p>Order Date: ${new Date(order.date).toLocaleString()}</p>
+                                <p>Shipping Region: ${order.region}</p>
+                                <div class="tracking-timeline">
+                                    ${order.tracking.steps.map((step, index) => `
+                                        <div class="tracking-step ${step.completed ? 'active' : ''}">
+                                            <div class="step-name">${step.name}</div>
+                                            ${step.date ? `<div class="step-date">${new Date(step.date).toLocaleString()}</div>` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    return;
+                }
+            } catch (err) {
+                // fall back to local cache
+            }
+
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            const modal = document.createElement('div');
+            modal.className = 'product-modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="product-modal-content">
+                    <span class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <div class="order-tracking">
+                        <h2>Order Tracking - ${order.id}</h2>
+                        <p>Order Date: ${new Date(order.date).toLocaleString()}</p>
+                        <p>Shipping Region: ${order.region}</p>
+                        <div class="tracking-timeline">
+                            ${order.tracking.steps.map((step, index) => `
+                                <div class="tracking-step ${step.completed ? 'active' : ''}">
+                                    <div class="step-name">${step.name}</div>
+                                    ${step.date ? `<div class="step-date">${new Date(step.date).toLocaleString()}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Region and Payment Methods
+        const regionConfig = {
+            // Africa
+            NG: {
+                currency: 'NGN',
+                symbol: '₦',
+                payments: ['Paystack', 'Flutterwave', 'Bank Transfer', 'Cash on Delivery'],
+                mobilePayments: ['MTN Mobile Money', 'Airtel Money']
+            },
+            ZA: {
+                currency: 'ZAR',
+                symbol: 'R',
+                payments: ['PayFast', 'Peach Payments', 'EFT', 'Credit Card'],
+                mobilePayments: ['SnapScan', 'Zapper']
+            },
+            KE: {
+                currency: 'KES',
+                symbol: 'KSh',
+                payments: ['M-Pesa', 'Airtel Money', 'Credit Card', 'Bank Transfer'],
+                mobilePayments: ['M-Pesa']
+            },
+            EG: {
+                currency: 'EGP',
+                symbol: 'E£',
+                payments: ['Fawry', 'Credit Card', 'Bank Transfer', 'Cash on Delivery'],
+                mobilePayments: ['Vodafone Cash', 'Orange Money']
+            },
+            // Middle East
+            AE: {
+                currency: 'AED',
+                symbol: 'د.إ',
+                payments: ['Credit Card', 'Apple Pay', 'Samsung Pay', 'Bank Transfer'],
+                mobilePayments: ['Emirates Digital Wallet']
+            },
+            SA: {
+                currency: 'SAR',
+                symbol: '﷼',
+                payments: ['mada', 'Credit Card', 'Apple Pay', 'Cash on Delivery'],
+                mobilePayments: ['STC Pay', 'Urpay']
+            },
+            QA: {
+                currency: 'QAR',
+                symbol: 'ر.ق',
+                payments: ['Credit Card', 'Apple Pay', 'Bank Transfer', 'Cash on Delivery'],
+                mobilePayments: ['Ooredoo Money']
+            },
+            // Asia
+            CN: {
+                currency: 'CNY',
+                symbol: '¥',
+                payments: ['Alipay', 'WeChat Pay', 'Union Pay', 'Bank Transfer'],
+                mobilePayments: ['Alipay', 'WeChat Pay']
+            },
+            JP: {
+                currency: 'JPY',
+                symbol: '¥',
+                payments: ['Credit Card', 'Konbini Payment', 'Bank Transfer', 'PayPay'],
+                mobilePayments: ['PayPay', 'LINE Pay']
+            },
+            IN: {
+                currency: 'INR',
+                symbol: '₹',
+                payments: ['UPI', 'Credit Card', 'Net Banking', 'Cash on Delivery'],
+                mobilePayments: ['Google Pay', 'PhonePe', 'Paytm']
+            },
+            SG: {
+                currency: 'SGD',
+                symbol: 'S$',
+                payments: ['PayNow', 'GrabPay', 'Credit Card', 'Bank Transfer'],
+                mobilePayments: ['GrabPay', 'PayLah!']
+            }
+        };
+
+        // Exchange rate helpers (uses exchangerate.host - free, no API key required)
+        const exchangeRates = {};
+        let currentCurrency = 'USD';
+
+        async function loadExchangeRates(targetCurrency = 'USD') {
+            // collect symbols we might need
+            const symbolsSet = new Set(Object.values(regionConfig).map(c => c.currency));
+            symbolsSet.add('USD');
+            const symbols = Array.from(symbolsSet).join(',');
+            const url = `https://api.exchangerate.host/latest?base=USD&symbols=${symbols}`;
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data && data.rates) {
+                    Object.assign(exchangeRates, data.rates);
+                    currentCurrency = targetCurrency || 'USD';
+                }
+            } catch (err) {
+                console.error('Failed to load exchange rates', err);
+            }
+        }
+
+        function convertPrice(usdAmount) {
+            if (!usdAmount && usdAmount !== 0) return 0;
+            const rate = exchangeRates[currentCurrency] || 1;
+            return Math.round((usdAmount * rate + Number.EPSILON) * 100) / 100;
+        }
+
+        function updateRegion() {
+            const region = document.getElementById('regionSelect').value;
+            const config = regionConfig[region] || {
+                currency: 'USD',
+                symbol: '$',
+                payments: ['Credit Card', 'PayPal'],
+                mobilePayments: []
+            };
+
+            // Load exchange rates for this region then update UI
+            loadExchangeRates(config.currency).then(() => {
+                // update payment methods and re-render product listings and cart totals
+                updatePaymentMethods(config);
+                displayProducts();
+                updateCart();
+            }).catch(() => {
+                // even if rates fail, update payment methods and render with USD
+                updatePaymentMethods(config);
+                displayProducts();
+                updateCart();
+            });
+        }
+
+        function updatePriceDisplay(config) {
+            // Update all price displays with new currency
+            document.querySelectorAll('.price, .discount-price').forEach(el => {
+                const priceValue = parseFloat(el.textContent.replace(/[^0-9.]/g, ''));
+                // You would normally use an exchange rate API here
+                el.textContent = `${config.symbol}${priceValue}`;
+            });
+        }
+
+        function updatePaymentMethods(config) {
+            // render into any payment-options container (checkout area or generic)
+            const containers = Array.from(document.querySelectorAll('.payment-options')).concat(
+                document.getElementById('checkoutPaymentOptions') ? [document.getElementById('checkoutPaymentOptions')] : []
+            );
+
+            containers.forEach(paymentOptions => {
+                paymentOptions.innerHTML = `
+                    <h3>Payment Methods</h3>
+                    ${config.payments.map(method => `
+                        <div class="payment-method" data-method="${method}" onclick="selectPayment('${method}', this)">
+                            <i class="fas fa-money-bill-wave"></i> ${method}
+                        </div>
+                    `).join('')}
+                    ${config.mobilePayments.length ? `
+                        <h3>Mobile Payments</h3>
+                        ${config.mobilePayments.map(method => `
+                            <div class="payment-method" data-method="${method}" onclick="selectPayment('${method}', this)">
+                                <i class="fas fa-mobile-alt"></i> ${method}
+                            </div>
+                        `).join('')}
+                    ` : ''}
+                `;
+            });
+        }
+
+        // Admin Access Control
+        const ADMIN_ACCESS_CODE = 'admin123'; // In a real app, this would be securely stored
+        
+        function showAdminAccess() {
+            document.getElementById('adminAccess').style.display = 'flex';
+        }
+
+        function checkAdminAccess() {
+            const accessCode = document.getElementById('adminAccessCode').value;
+            if (accessCode === ADMIN_ACCESS_CODE) {
+                document.getElementById('adminLoginBtn').style.display = 'block';
+                document.getElementById('adminAccess').style.display = 'none';
+                alert('Admin access granted');
+            } else {
+                alert('Invalid access code');
+            }
+        }
+
+        // --- Admin: load and render orders from backend ---
+        async function loadAdminOrders() {
+            try {
+                const res = await fetch('http://localhost:3000/api/admin/orders', {
+                    headers: { 'x-admin-code': ADMIN_ACCESS_CODE }
+                });
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    document.getElementById('orderList').innerHTML = '<p>Failed to load orders: ' + (data.error || res.statusText) + '</p>';
+                    return;
+                }
+                const data = await res.json();
+                orders = data; // replace local cache
+                renderAdminOrders();
+            } catch (err) {
+                document.getElementById('orderList').innerHTML = '<p>Error loading orders: ' + err.message + '</p>';
+            }
+        }
+
+        async function loadPending2FA() {
+            try {
+                const res = await fetch('http://localhost:3000/api/admin/pending-2fa', {
+                    headers: { 'x-admin-code': ADMIN_ACCESS_CODE }
+                });
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    document.getElementById('pending2faList').innerHTML = '<p>Failed to load pending 2FA: ' + (data.error || res.statusText) + '</p>';
+                    return;
+                }
+                const data = await res.json();
+                if (!data || !data.length) {
+                    document.getElementById('pending2faList').innerHTML = '<p>No pending 2FA requests.</p>';
+                    return;
+                }
+                document.getElementById('pending2faList').innerHTML = data.map(u => `
+                    <div style="border:1px solid #ddd;padding:8px;margin-bottom:6px;background:#fff;">
+                        <strong>${u.email}</strong> (requested at ${new Date(u.createdAt).toLocaleString()})
+                        <button onclick="approve2FA('${u.email}')" style="margin-left:8px;">Approve 2FA</button>
+                    </div>
+                `).join('');
+            } catch (err) {
+                document.getElementById('pending2faList').innerHTML = '<p>Error loading pending 2FA: ' + err.message + '</p>';
+            }
+        }
+
+        async function approve2FA(email) {
+            if (!confirm('Approve 2FA for ' + email + '?')) return;
+            try {
+                const res = await fetch('http://localhost:3000/api/admin/approve-2fa', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-code': ADMIN_ACCESS_CODE },
+                    body: JSON.stringify({ email })
+                });
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    return alert('Failed to approve: ' + (data.error || res.statusText));
+                }
+                alert('2FA approved for ' + email);
+                await loadPending2FA();
+                await loadAdminOrders();
+            } catch (err) {
+                alert('Error approving 2FA: ' + err.message);
+            }
+        }
+
+        function renderAdminOrders() {
+            const container = document.getElementById('orderList');
+            if (!orders || orders.length === 0) {
+                container.innerHTML = '<p>No orders yet.</p>';
+                return;
+            }
+            container.innerHTML = orders.map(order => `
+                <div style="border:1px solid #ddd;padding:10px;margin-bottom:8px;background:#fff;">
+                    <strong>Order ${order.id}</strong> - ${order.status}<br>
+                    <small>${new Date(order.date).toLocaleString()}</small>
+                    <div>Customer: ${order.fullName || order.userEmail || 'N/A'}</div>
+                    <div>Region: ${order.region}</div>
+                    <div>Items: ${order.items.map(i => i.name + ' x' + i.quantity).join(', ')}</div>
+                    <div style="margin-top:8px;">Tracking Steps:</div>
+                    <div>
+                        ${order.tracking.steps.map((step, idx) => `
+                            <div style="display:flex;align-items:center;gap:8px;margin:6px 0;">
+                                <div style="flex:1;">${idx+1}. ${step.name} ${step.date ? '('+ new Date(step.date).toLocaleString() +')' : ''}</div>
+                                <button onclick="updateTrackingStep('${order.id}', ${idx}, ${!step.completed})" style="padding:4px 8px;">${step.completed ? 'Mark Incomplete' : 'Mark Complete'}</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function updateTrackingStep(orderId, stepIndex, completed) {
+            try {
+                const res = await fetch(`http://localhost:3000/api/orders/${orderId}/tracking`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-code': ADMIN_ACCESS_CODE },
+                    body: JSON.stringify({ stepIndex, completed })
+                });
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    alert('Failed to update tracking: ' + (data.error || res.statusText));
+                    return;
+                }
+                const data = await res.json();
+                // refresh admin list
+                await loadAdminOrders();
+            } catch (err) {
+                alert('Error updating tracking: ' + err.message);
+            }
+        }
+
+        // --- User: view own orders ---
+        async function showUserOrders() {
+            if (!currentUser || !currentUser.email) return alert('Please log in first');
+            try {
+                const res = await fetch(`http://localhost:3000/api/orders?email=${encodeURIComponent(currentUser.email)}`);
+                if (!res.ok) throw new Error('Failed to load orders');
+                const data = await res.json();
+                const modal = document.createElement('div');
+                modal.className = 'product-modal';
+                modal.style.display = 'block';
+                modal.innerHTML = `
+                    <div class="product-modal-content">
+                        <span class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                        <h2>Your Orders</h2>
+                        ${data.length ? data.map(o => `
+                            <div style="border:1px solid #ddd;padding:10px;margin-bottom:8px;background:#fff;">
+                                <strong>Order ${o.id}</strong> - ${o.status}<br>
+                                <small>${new Date(o.date).toLocaleString()}</small>
+                                <div>Items: ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}</div>
+                                <button onclick="showOrderTracking('${o.id}')">Track Order</button>
+                            </div>
+                        `).join('') : '<p>No orders found.</p>'}
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            } catch (err) {
+                alert('Error loading your orders: ' + err.message);
+            }
+        }
+
+        // Add keyboard shortcut for admin access (Ctrl + Shift + A)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                showAdminAccess();
+            }
+        });
+
+        // Category and Seasonal Functions
+        function filterByCategory(category) {
+            displayProducts(category);
+            document.getElementById('categoryMenu').classList.remove('show');
+        }
+
+        function toggleCategoryMenu() {
+            document.getElementById('categoryMenu').classList.toggle('show');
+        }
+
+        function getActivePromotions() {
+            const now = new Date();
+            return Object.entries(seasonalPromotions).filter(([key, promo]) => 
+                now >= promo.start && now <= promo.end
+            );
+        }
+
+        function getSeasonalDiscount(product) {
+            const activePromos = getActivePromotions();
+            if (!activePromos.length || !product.seasonal) return 0;
+            
+            return Math.max(...activePromos
+                .filter(([season]) => product.seasonal.includes(season))
+                .map(([_, promo]) => promo.discount)
+            );
+        }
+
+    // Initialize the store (load exchange rates for default region and render)
+    updateRegion();
+
+        // Close category menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('categoryMenu');
+            const btn = document.querySelector('.category-btn');
+            if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+        
+        // Add event listener for search input
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+    </script>
+</body>
+</html>
