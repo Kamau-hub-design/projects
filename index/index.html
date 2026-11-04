@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campusly | University Companion</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar" id="sidebar">
+        <h2 class="logo">Campus<span>ly.</span></h2>
+
+        <p class="nav-title">MAIN MENU</p>
+
+        <nav>
+            <a href="#" class="nav-link active" data-page="dashboard">⌂ Dashboard</a>
+            <a href="#" class="nav-link" data-page="announcements">▤ Announcements</a>
+            <a href="#" class="nav-link" data-page="timetable">▦ Timetable</a>
+            <a href="#" class="nav-link" data-page="events">◷ Events</a>
+            <a href="#" class="nav-link" data-page="resources">▣ Resources</a>
+            <a href="#" class="nav-link" data-page="lost">⌕ Lost & Found</a>
+            <a href="#" class="nav-link" data-page="profile">♙ My Profile</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Campusly © 2026</p>
+            <small>Your campus, connected.</small>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button id="menuBtn" class="menu-btn">☰</button>
+            <div>
+                <h3>Student Portal</h3>
+                <small>University Companion</small>
+            </div>
+
+            <div class="top-actions">
+                <input type="search" id="searchInput"
+                       placeholder="Search campus..."
+                <button id="notificationBtn">♧</button>
+                <div class="avatar">S</div>
+            </div>
+        </header>
+
+        <section id="dashboard" class="page active">
+
+            <div class="welcome">
+                <div>
+                    <p class="subtitle">YOUR STUDENT SPACE</p>
+                    <h1>Welcome back, Student!</h1>
+                    <p>Make today count. Explore your campus.</p>
+                </div>
+
+                <span class="date">4 November 2026</span>
+            </div>
+
+            <div class="hero">
+                <div>
+                    <p>WELCOME TO CAMPUSLY</p>
+                    <h1>
+                        Your Campus Life.<br>
+                        One Connected Place.
+                    </h1>
+                    <p>Discover events, announcements,
+                       learning resources and opportunities.</p>
+                    <button type="button" onclick="showPage('events')">
+                        Explore Events →
+                    </button>
+                </div>
+            </div>
+
+            <h2 class="section-heading">Campus Overview</h2>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <span>▤</span>
+                    <h3>04</h3>
+                    <p>Announcements</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>◷</span>
+                    <h3>03</h3>
+                    <p>Upcoming Events</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>▦</span>
+                    <h3>12</h3>
+                    <p>Weekly Classes</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>♧</span>
+                    <h3>08</h3>
+                    <p>Student Clubs</p>
+                </div>
+
+            </div>
+
+            <div class="content-grid">
+
+                <div class="panel">
+                    <h2>Latest Announcements</h2>
+
+                    <div class="announcement">
+                        <h4>Library opening hours extended</h4>
+                        <p>Students can now enjoy extended
+                           study hours this week.</p>
+                    </div>
+
+                    <div class="announcement">
+                        <h4>Club registration is open</h4>
+                        <p>Join a student club and meet
+                           new people.</p>
+                    </div>
+
+                    <div class="announcement">
+                        <h4>Career talk this Friday</h4>
+                        <p>Meet professionals and discover
+                           career opportunities.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2>Upcoming Events</h2>
+
+                    <div class="event">
+                        <strong>06 NOV</strong>
+                        <div>
+                            <h4>Student Tech Meetup</h4>
+                            <p>Innovation Hub · 2 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="event">
+                        <strong>09 NOV</strong>
+                        <div>
+                            <h4>Sports Day</h4>
+                            <p>Main Field · 9 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="event">
+                        <strong>12 NOV</strong>
+                        <div>
+                            <h4>Business Forum</h4>
+                            <p>Lecture Hall · 10 AM</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="announcements" class="page">
+            <h1>Announcements</h1>
+            <p>Stay updated with everything happening on campus.</p>
+            <div id="announcementList" class="panel">
+                <h3>Library opening hours extended</h3>
+                <p>More time for studying and research this week.</p>
+                <hr>
+                <h3>Club registration is open</h3>
+                <p>Register and become part of a community.</p>
+            </div>
+        </section>
+
+        <section id="timetable" class="page">
+            <h1>My Timetable</h1>
+            <div class="panel">
+                <table>
+                    <tr>
+                        <th>Day</th>
+                        <th>8 AM</th>
+                        <th>10 AM</th>
+                        <th>2 PM</th>
+                    </tr>
+                    <tr>
+                        <td>Monday</td>
+                        <td>Web Development</td>
+                        <td>Database</td>
+                        <td>Study</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>Networking</td>
+                        <td>Software Engineering</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td>Database</td>
+                        <td>Free</td>
+                        <td>Programming Lab</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td>Web Development</td>
+                        <td>Entrepreneurship</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>Networking</td>
+                        <td>Project Work</td>
+                        <td>Study</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section id="events" class="page">
+            <h1>Campus Events</h1>
+            <p>Discover activities and connect with other students.</p>
+            <div class="event-list">
+                <div class="panel">
+                    <h3>Student Tech Meetup</h3>
+                    <p>6 November · Innovation Hub · 2 PM</p>
+                    <button onclick="saveEvent('Student Tech Meetup')">
+                        Register Interest
+                    </button>
+                </div>
+                <div class="panel">
+                    <h3>Sports Day</h3>
+                    <p>9 November · Main Field · 9 AM</p>
+                    <button onclick="saveEvent('Sports Day')">
+                        Register Interest
+                    </button>
+                </div>
+                <div class="panel">
+                    <h3>Business Forum</h3>
+                    <p>12 November · Lecture Hall · 10 AM</p>
+                    <button onclick="saveEvent('Business Forum')">
+                        Register Interest
+                    </button>
+                </div>
+            </div>
+            <div class="panel">
+                <h3>Your interested events</h3>
+                <ul id="savedEvents"></ul>
+            </div>
+        </section>
+
+        <section id="resources" class="page">
+            <h1>Study Resources</h1>
+            <div class="resource-grid">
+                <a href="https://scholar.google.com/" target="_blank">Google Scholar →</a>
+                <a href="https://www.khanacademy.org/" target="_blank">Khan Academy →</a>
+                <a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp →</a>
+                <a href="https://www.coursera.org/" target="_blank">Coursera →</a>
+            </div>
+        </section>
+
+        <section id="lost" class="page">
+            <h1>Lost & Found</h1>
+            <p>Help students find their missing belongings.</p>
+
+            <form id="lostForm" class="panel">
+                <label>Item name</label>
+                <input id="itemName" required placeholder="e.g. Black backpack">
+
+                <label>Location</label>
+                <input id="itemLocation" required placeholder="Where was it lost/found?">
+
+                <label>Contact</label>
+                <input id="itemContact" required placeholder="Your contact">
+
+                <button type="submit">Post Notice</button>
+            </form>
+
+            <div id="lostItems" class="panel"></div>
+        </section>
+
+        <section id="profile" class="page">
+            <h1>My Profile</h1>
+            <form id="profileForm" class="panel">
+                <label>Full name</label>
+                <input id="studentName" required placeholder="Your name">
+
+                <label>Course</label>
+                <input id="studentCourse" placeholder="Your course">
+
+                <label>Year of study</label>
+                <select id="studentYear">
+                    <option>Year 1</option>
+                    <option>Year 2</option>
+                    <option>Year 3</option>
+                    <option>Year 4</option>
+                </select>
+
+                <button type="submit">Save Profile</button>
+            </form>
+        </section>
+
+        <footer>
+            © 2026 Campusly | Your Campus, Connected.
+        </footer>
+
+    </main>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="../script/script.js"></script>
+</body>
+</html>
