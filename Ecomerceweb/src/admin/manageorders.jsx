@@ -1,0 +1,80 @@
+import { useMemo, useState } from 'react'
+import { formatPrice } from '../data/products.js'
+
+const fulfillmentOptions = [
+  ['unfulfilled', 'Unfulfilled'],
+  ['processing', 'Processing'],
+  ['shipped', 'Shipped'],
+  ['delivered', 'Delivered'],
+  ['returned', 'Returned'],
+]
+
+function ManageOrders({ orders, customers, onFulfillmentChange, onNavigate }) {
+  const [filter, setFilter] = useState('all')
+  const [search, setSearch] = useState('')
+  const [busyOrder, setBusyOrder] = useState('')
+  const [message, setMessage] = useState('')
+
+  const visibleOrders = useMemo(() => orders.filter((order) => {
+    const matchesStatus = filter === 'all' || order.fulfillment_status === filter
+    const customer = customers[order.user_id] || ''
+    const matchesSearch = `${order.id} ${customer} ${order.status}`.toLowerCase().includes(search.trim().toLowerCase())
+    return matchesStatus && matchesSearch
+  }), [customers, filter, orders, search])
+
+  async function updateFulfillment(orderId, status) {
+    setBusyOrder(orderId)
+    setMessage('')
+    try {
+      await onFulfillmentChange(orderId, status)
+      setMessage('Fulfillment status updated.')
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Could not update this order.')
+    } finally {
+      setBusyOrder('')
+    }
+  }
+
+  return (
+    <main className="shop-section admin-dashboard">
+      <button className="back-link" onClick={() => onNavigate('/admin')}>← Admin overview</button>
+      <div className="dashboard-welcome admin-page-heading">
+        <div><span className="eyebrow">STUDIO GOODS · ADMIN</span><h1>Manage <em>orders.</em></h1><p>Review payment and update order fulfillment.</p></div>
+      </div>
+      <section className="dashboard-panel admin-orders-panel">
+        <div className="admin-management-toolbar">
+          <label className="products-search"><span className="visually-hidden">Search orders</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search order or customer..." /></label>
+          <label className="admin-filter-label">FULFILLMENT
+            <select value={filter} onChange={(event) => setFilter(event.target.value)}>
+              <option value="all">All statuses</option>
+              {fulfillmentOptions.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
+            </select>
+          </label>
+          <span className="item-count">{visibleOrders.length} orders</span>
+        </div>
+        {message && <p className="admin-feedback" role="status">{message}</p>}
+        {visibleOrders.length ? (
+          <div className="admin-orders-table">
+            <div className="admin-order-row admin-manage-order-row admin-order-head"><span>ORDER / CUSTOMER</span><span>DATE</span><span>PAYMENT</span><span>FULFILLMENT</span><span>TOTAL</span></div>
+            {visibleOrders.map((order) => (
+              <article className="admin-order-row admin-manage-order-row" key={order.id}>
+                <span className="admin-order-customer"><strong>{order.id.slice(0, 8).toUpperCase()}</strong><small>{customers[order.user_id] || 'Customer'}</small></span>
+                <span>{order.date}</span>
+                <span className={`order-status order-status-${order.status.toLowerCase().replaceAll(' ', '-')}`}>{order.status}</span>
+                <label className="visually-hidden" htmlFor={`fulfillment-${order.id}`}>Fulfillment status for order {order.id}</label>
+                <select id={`fulfillment-${order.id}`} className="admin-fulfillment-select" value={order.fulfillment_status || 'unfulfilled'} disabled={busyOrder === order.id || order.status !== 'Paid'} onChange={(event) => updateFulfillment(order.id, event.target.value)}>
+                  {fulfillmentOptions.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
+                </select>
+                <strong>{formatPrice(order.total)}</strong>
+                <details className="admin-order-details"><summary>Order items</summary><div>{order.items.map((item) => <p key={`${item.id}-${item.variant || ''}`}>{item.name}{item.variant && ` · ${item.variant}`} × {item.quantity}</p>)}</div></details>
+                {order.shipping_details?.address && <details className="admin-order-details"><summary>Shipping address</summary><div><p>{order.shipping_details.name}</p><p>{[order.shipping_details.address.line1, order.shipping_details.address.line2, [order.shipping_details.address.city, order.shipping_details.address.state, order.shipping_details.address.postal_code].filter(Boolean).join(', '), order.shipping_details.address.country].filter(Boolean).join(' · ')}</p></div></details>}
+              </article>
+            ))}
+          </div>
+        ) : <div className="dashboard-empty"><p>No orders match these filters.</p></div>}
+      </section>
+    </main>
+  )
+}
+
+export default ManageOrders
