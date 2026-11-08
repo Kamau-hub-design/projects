@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: smartlightautomation
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: SMARTLIGHT_HOST
+        value: 0.0.0.0
+      - key: SMARTLIGHT_PORT
+        value: 5000
+      - key: SMARTLIGHT_DEBUG
+        value: false
+      - key: SMARTLIGHT_SECRET_KEY
+        generateValue: true

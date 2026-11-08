@@ -1,0 +1,166 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 55%, #e0f2fe 100%);
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    padding: 32px 16px;
+    background: linear-gradient(120deg, #0f172a, #1d4ed8);
+    color: #fff;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 8px;
+    font-size: 32px;
+}
+
+header p {
+    color: #dbeafe;
+}
+
+.container {
+    display: grid;
+    width: min(100% - 32px, 1000px);
+    margin: 30px auto;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: 20px;
+}
+
+.status-card,
+.card {
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(15 23 42 / 8%);
+}
+
+.status-card {
+    text-align: center;
+}
+
+.light-icon {
+    min-height: 78px;
+    margin-bottom: 15px;
+    color: #f59e0b;
+    font-size: 65px;
+}
+
+.status-card h2,
+.card h2 {
+    margin-bottom: 15px;
+}
+
+.card p {
+    margin-top: 12px;
+    line-height: 1.5;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+button {
+    margin-top: 12px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 8px;
+    background: #1769aa;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.on-btn {
+    background: #16a34a;
+}
+
+.off-btn,
+.cancel-btn {
+    background: #dc2626;
+}
+
+input,
+select {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+}
+
+input[type="range"] {
+    padding: 0;
+    accent-color: #1769aa;
+}
+
+label {
+    display: block;
+    margin-top: 14px;
+    font-weight: 600;
+}
+
+#scheduleMessage {
+    color: #166534;
+}
+
+footer {
+    padding: 25px 16px;
+    color: #64748b;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: calc(100% - 24px);
+        margin: 18px auto;
+        gap: 14px;
+    }
+
+    header {
+        padding: 26px 16px;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .status-card,
+    .card {
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
+    }
+}

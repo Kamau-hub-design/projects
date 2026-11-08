@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Smart Light Automation</title>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+     <body>
+        <header>
+            <h1>Smartlight</h1>
+            <p>Intelligent Lighting Control System</p>
+        </header>
+        <main class="container">
+            <section class="status-card">
+                <div class="light-icon" id="light-icon"></div>
+                <h2 id="lightStatus">Loading</h2>
+                <p>Current light status</p>
+
+                <div class="buttons">
+                    <button class="on-btn" onclick="controlLight('on')">
+                        TURN ON
+                    </button>
+                    <button class="off-btn" onclick="controlLight('off')">
+                        TURN OFF
+                    </button>
+                </div>
+            </section>
+            <section class="card">
+                <h2>Brightness Control</h2>
+                <input
+                type="range"
+                min="0"
+                max="100"
+                value="70"
+                id="brightness"
+                oninput="showBrightness(this.value)"
+                >
+                <p>Brightness: <span id="brightnessValue">70</span></p>
+
+                <button onclick="updateBrightness()">
+                    Apply Brightness
+                </button>
+            </section>
+            <section class="card">
+                <h2>Motion Detection</h2>
+                <p id="motionStatus">Checking Sensor</p>
+
+                <button onclick="refreshStatus()">
+                    Refresh Sensor
+                </button>
+            </section>
+            <section class="card">
+                <h2>Light Scheduling</h2>
+                <label>Choose Action</label>
+                <select id="action">
+                    <option value="on">TURN ON</option>
+                    <option value="off">TURN OFF</option>
+
+                </select>
+                <label>Choose Date and Time</label>
+                <input type="datetime-local" id="scheduleTime">
+
+                <button onclick="createSchedule()">
+                    Save Schedule
+                </button>
+                <button class="cancel-btn" onclick="cancelSchedule()">
+                    Cancel Schedule
+                </button>
+
+                <p id="scheduleMessage"></p>
+            </section>
+            <section class="card">
+                <h2>System Information</h2>
+                <p>Connections: <span id="connection">Checking....</span></p>
+                <p>Operating Mode: <span id="mode">---</span></p>
+                <p>Motion sensor: <span id="motion">---</span></p>
+            </section>
+        </main>
+        <footer>
+            <p>SmartLight Automation System | Python Project</p>
+        </footer>
+        <script src="../static/script.js"></script>
+     </body>
+</html>
