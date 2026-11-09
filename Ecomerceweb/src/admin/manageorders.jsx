@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { formatPrice } from '../data/products.js'
 
 const fulfillmentOptions = [
@@ -9,10 +9,37 @@ const fulfillmentOptions = [
   ['returned', 'Returned'],
 ]
 
-function ManageOrders({ orders, customers, onFulfillmentChange, onNavigate }) {
+function TrackingEditor({ order, busy, onSave }) {
+  const [carrier, setCarrier] = useState(order.tracking_carrier || '')
+  const [number, setNumber] = useState(order.tracking_number || '')
+  const [url, setUrl] = useState(order.tracking_url || '')
+
+  useEffect(() => {
+    setCarrier(order.tracking_carrier || '')
+    setNumber(order.tracking_number || '')
+    setUrl(order.tracking_url || '')
+  }, [order.tracking_carrier, order.tracking_number, order.tracking_url])
+
+  async function submit(event) {
+    event.preventDefault()
+    await onSave(order.id, { carrier, number, url })
+  }
+
+  return (
+    <form className="admin-tracking-form" onSubmit={submit}>
+      <label>Carrier<input value={carrier} maxLength={100} onChange={(event) => setCarrier(event.target.value)} placeholder="e.g. UPS" /></label>
+      <label>Tracking number<input value={number} maxLength={120} onChange={(event) => setNumber(event.target.value)} placeholder="Tracking number" /></label>
+      <label>Tracking URL<input type="url" value={url} onChange={(event) => setUrl(event.target.value)} placeholder="https://carrier.example/track/…" /></label>
+      <button className="account-submit" type="submit" disabled={busy || order.status !== 'Paid'}>{busy ? 'Saving…' : 'Save tracking'}</button>
+    </form>
+  )
+}
+
+function ManageOrders({ orders, customers, onFulfillmentChange, onTrackingChange, onNavigate }) {
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [busyOrder, setBusyOrder] = useState('')
+  const [busyTrackingOrder, setBusyTrackingOrder] = useState('')
   const [message, setMessage] = useState('')
 
   const visibleOrders = useMemo(() => orders.filter((order) => {
@@ -32,6 +59,19 @@ function ManageOrders({ orders, customers, onFulfillmentChange, onNavigate }) {
       setMessage(error instanceof Error ? error.message : 'Could not update this order.')
     } finally {
       setBusyOrder('')
+    }
+  }
+
+  async function updateTracking(orderId, tracking) {
+    setBusyTrackingOrder(orderId)
+    setMessage('')
+    try {
+      await onTrackingChange(orderId, tracking)
+      setMessage('Shipment tracking updated.')
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Could not update shipment tracking.')
+    } finally {
+      setBusyTrackingOrder('')
     }
   }
 
@@ -68,6 +108,10 @@ function ManageOrders({ orders, customers, onFulfillmentChange, onNavigate }) {
                 <strong>{formatPrice(order.total)}</strong>
                 <details className="admin-order-details"><summary>Order items</summary><div>{order.items.map((item) => <p key={`${item.id}-${item.variant || ''}`}>{item.name}{item.variant && ` · ${item.variant}`} × {item.quantity}</p>)}</div></details>
                 {order.shipping_details?.address && <details className="admin-order-details"><summary>Shipping address</summary><div><p>{order.shipping_details.name}</p><p>{[order.shipping_details.address.line1, order.shipping_details.address.line2, [order.shipping_details.address.city, order.shipping_details.address.state, order.shipping_details.address.postal_code].filter(Boolean).join(', '), order.shipping_details.address.country].filter(Boolean).join(' · ')}</p></div></details>}
+                <details className="admin-order-details admin-tracking-details">
+                  <summary>{order.tracking_number ? 'Edit shipment tracking' : 'Add shipment tracking'}</summary>
+                  <TrackingEditor order={order} busy={busyTrackingOrder === order.id} onSave={updateTracking} />
+                </details>
               </article>
             ))}
           </div>

@@ -335,6 +335,16 @@
 .profile-form input:focus { outline:1px solid #879076; }
 .profile-note { margin-top:25px; padding:13px 15px; background:#eeeee7; color:#59614d; font-size:10px; }
 .profile-note p { margin:6px 0 0; color:#77776d; line-height:1.7; }
+.profile-orders { margin-top:32px; }
+.profile-orders-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:9px; }
+.profile-orders-heading h2 { margin:7px 0 0; font-size:22px; font-weight:500; letter-spacing:-.04em; }
+.profile-view-orders { padding:0; border:0; background:none; cursor:pointer; }
+.profile-order { display:flex; width:100%; align-items:center; justify-content:space-between; gap:14px; padding:13px 0; border:0; border-bottom:1px solid var(--line); background:none; color:var(--ink); text-align:left; cursor:pointer; }
+.profile-order>span { display:grid; gap:5px; font-size:10px; }
+.profile-order>span:last-child { text-align:right; }
+.profile-order small { color:#858479; font-size:9px; text-transform:capitalize; }
+.profile-orders-empty { padding:14px 0; color:#77776d; font-size:10px; }
+.profile-orders-empty p { margin:0 0 10px; }
 .dashboard-page,.admin-dashboard { min-height:560px; }
 .dashboard-welcome { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:30px; }
 .dashboard-welcome h1 { margin:12px 0 7px; font-size:clamp(35px,5vw,55px); font-weight:500; line-height:1.05; letter-spacing:-.07em; }
@@ -399,8 +409,29 @@
 .admin-order-details summary { width:max-content; cursor:pointer; }
 .admin-order-details>div { padding:8px 0; }
 .admin-order-details p { margin:6px 0; }
+.admin-tracking-details { padding:10px 0; }
+.admin-tracking-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:620px; padding:8px 0; }
+.admin-tracking-form label { display:grid; gap:6px; color:#77776b; font-size:8px; letter-spacing:.1em; }
+.admin-tracking-form label:nth-child(3) { grid-column:1 / -1; }
+.admin-tracking-form input { min-width:0; height:38px; padding:0 10px; border:1px solid var(--line); background:#fffefa; color:var(--ink); font-size:10px; letter-spacing:normal; }
+.admin-tracking-form .account-submit { width:max-content; min-width:130px; }
+.admin-tracking-form .account-submit:disabled { opacity:.6; cursor:wait; }
 .customer-fulfillment { margin:14px 0 0; color:#77776d; font-size:9px; text-transform:capitalize; }
 .customer-fulfillment strong { color:#59614d; font-weight:500; }
+.customer-tracking { margin:8px 0 0; color:#77776d; font-size:9px; }
+.customer-tracking strong { color:#59614d; font-weight:500; }
+.order-track-button { padding:9px 0 0; border:0; background:none; color:#59614d; font-size:10px; cursor:pointer; }
+.order-tracking-card { max-width:720px; }
+.tracking-progress { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:28px 0; }
+.tracking-step { display:grid; justify-items:center; gap:8px; color:#99988c; text-align:center; text-transform:capitalize; }
+.tracking-step>span { display:grid; place-items:center; width:28px; height:28px; border:1px solid #d6d5ca; border-radius:50%; font-size:10px; }
+.tracking-step strong { font-size:9px; font-weight:400; }
+.tracking-step.is-complete { color:#59614d; }
+.tracking-step.is-complete>span { border-color:#667257; background:#667257; color:white; }
+.tracking-shipment { padding:15px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.tracking-shipment p { margin:9px 0; color:#77776d; font-size:10px; }
+.tracking-shipment p strong { color:var(--ink); font-weight:500; }
+.tracking-pending { padding:13px 0; border-top:1px solid var(--line); color:#77776d; font-size:10px; }
 .admin-marketplace { --market-ink:#202a38; --market-muted:#7b8491; --market-line:#e9edf2; --market-orange:#f68b1f; max-width:none; min-height:calc(100vh - 110px); padding:36px 4.5% 55px; background:#f5f7fa; color:var(--market-ink); }
 .admin-marketplace-layout { display:grid; grid-template-columns:220px minmax(0,1fr); gap:28px; max-width:1440px; margin:0 auto; align-items:start; }
 .admin-marketplace-sidebar { position:sticky; top:22px; display:flex; min-height:540px; flex-direction:column; padding:22px 14px; border:1px solid var(--market-line); border-radius:10px; background:#fff; }

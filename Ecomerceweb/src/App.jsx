@@ -137,7 +137,7 @@ function App() {
     let active = true
     async function loadAccountData() {
       let ordersQuery = supabase.from('orders')
-        .select('id,user_id,status,fulfillment_status,total_cents,currency,items,shipping_details,created_at')
+        .select('id,user_id,status,fulfillment_status,tracking_carrier,tracking_number,tracking_url,total_cents,currency,items,shipping_details,created_at')
         .order('created_at', { ascending: false })
       if (user.app_metadata?.role !== 'admin') {
         ordersQuery = ordersQuery.eq('user_id', user.id)
@@ -369,6 +369,41 @@ function App() {
       : order))
   }
 
+  async function changeTracking(orderId, tracking) {
+    if (!supabase || user?.app_metadata?.role !== 'admin') {
+      throw new Error('You do not have permission to update shipment tracking.')
+    }
+    const carrier = tracking.carrier.trim()
+    const number = tracking.number.trim()
+    const url = tracking.url.trim()
+    if (carrier.length > 100 || number.length > 120) {
+      throw new Error('Carrier must be 100 characters or fewer and tracking number 120 characters or fewer.')
+    }
+    if (url) {
+      let parsedUrl
+      try {
+        parsedUrl = new URL(url)
+      } catch {
+        throw new Error('Enter a valid HTTPS tracking link.')
+      }
+      if (parsedUrl.protocol !== 'https:') throw new Error('Tracking links must use HTTPS.')
+    }
+    const updates = {
+      tracking_carrier: carrier || null,
+      tracking_number: number || null,
+      tracking_url: url || null,
+    }
+    const { error } = await supabase.from('orders')
+      .update(updates)
+      .eq('id', orderId)
+      .select('id')
+      .single()
+    if (error) throw new Error(`Could not update shipment tracking: ${error.message}`)
+    setOrders((current) => current.map((order) => order.id === orderId
+      ? { ...order, ...updates }
+      : order))
+  }
+
   async function signOut() {
     if (!supabase) return
     const { error } = await supabase.auth.signOut()
@@ -416,17 +451,20 @@ function App() {
   const searchParam = routeParams.get('search') || ''
   const showFavorites = routeParams.get('filter') === 'saved'
   const productMatch = routePath.match(/^\/products\/(\d+)\/?$/)
+  const orderMatch = routePath.match(/^\/orders\/([^/]+)\/?$/)
   const selectedProduct = productMatch ? catalogProducts.find((product) => product.id === Number(productMatch[1])) : null
   const isAdminRoute = /^\/admin(?:\/|$)/.test(routePath)
+  const isOrderRoute = routePath === '/orders' || routePath === '/orders/' || Boolean(orderMatch)
+  const isProtectedRoute = protectedRoutes.includes(routePath) || routePath === '/orders/' || Boolean(orderMatch)
   useEffect(() => {
-    if (!authReady || (!protectedRoutes.includes(routePath) && !isAdminRoute) || user) return
+    if (!authReady || (!isProtectedRoute && !isAdminRoute) || user) return
     navigate(`/login?returnTo=${encodeURIComponent(routePath)}`)
-  }, [authReady, routePath, user, isAdminRoute])
+  }, [authReady, routePath, user, isAdminRoute, isProtectedRoute])
 
   let page
-  if (!supabase && (['/login', '/register', '/reset-password', ...protectedRoutes].includes(routePath) || isAdminRoute)) {
+  if (!supabase && (['/login', '/register', '/reset-password', ...protectedRoutes].includes(routePath) || isOrderRoute || isAdminRoute)) {
     page = <main className="content-page service-unavailable"><span className="eyebrow">ACCOUNT AND CHECKOUT SERVICES</span><h1>One last setup step.</h1><p>Add your Supabase project URL and publishable key as environment variables to enable secure accounts, saved pieces, order history, and checkout.</p></main>
-  } else if ((protectedRoutes.includes(routePath) || isAdminRoute) && !authReady) {
+  } else if ((isProtectedRoute || isAdminRoute) && !authReady) {
     page = <main className="content-page auth-loading" role="status">Checking your sign-in…</main>
   } else if (routePath === '/') {
     page = <Home products={catalogProducts} favorites={favorites} onAdd={addToCart} onFavorite={toggleFavorite} onNavigate={navigate} />
@@ -451,13 +489,13 @@ function App() {
   } else if (routePath === '/admin' || routePath === '/admin/') {
     page = <AdminDashboard orders={orders} customers={customerNames} productCount={catalogProducts.length} onNavigate={navigate} onLogout={signOut} />
   } else if (routePath === '/admin/orders' || routePath === '/admin/orders/') {
-    page = <ManageOrders orders={orders} customers={customerNames} onFulfillmentChange={changeFulfillment} onNavigate={navigate} />
+    page = <ManageOrders orders={orders} customers={customerNames} onFulfillmentChange={changeFulfillment} onTrackingChange={changeTracking} onNavigate={navigate} />
   } else if (routePath === '/admin/products' || routePath === '/admin/products/') {
     page = <ManageProducts supabase={supabase} onSaveProduct={saveProduct} onSetProductActive={setProductActive} onNavigate={navigate} />
   } else if (routePath === '/profile' || routePath === '/profile/') {
-    page = <Profile profile={profile} favoriteCount={favoriteProducts} orderCount={orders.length} onSave={saveProfile} onNavigate={navigate} onLogout={signOut} />
-  } else if (routePath === '/orders' || routePath === '/orders/') {
-    page = <Orders orders={orders} onNavigate={navigate} paymentSuccess={routeParams.get('checkout') === 'success'} />
+    page = <Profile profile={profile} favoriteCount={favoriteProducts} orderCount={orders.length} orders={orders} onSave={saveProfile} onNavigate={navigate} onLogout={signOut} />
+  } else if (isOrderRoute) {
+    page = <Orders orders={orders} orderId={orderMatch?.[1]} onNavigate={navigate} paymentSuccess={routeParams.get('checkout') === 'success'} />
   } else {
     page = <main className="content-page empty-search"><p>That page isn’t here, but the good stuff is.</p><button onClick={() => navigate('/')}>Back to the shop</button></main>
   }

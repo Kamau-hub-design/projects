@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import { formatPrice } from '../data/products.js'
 
-function Profile({ profile, favoriteCount, orderCount, onSave, onNavigate, onLogout }) {
+function Profile({ profile, favoriteCount, orderCount, orders, onSave, onNavigate, onLogout }) {
   const [name, setName] = useState(profile.name)
   const [status, setStatus] = useState('')
 
@@ -47,6 +48,20 @@ function Profile({ profile, favoriteCount, orderCount, onSave, onNavigate, onLog
             {status && <p className="account-status" role="status">{status}</p>}
           </form>
           <div className="profile-note"><strong>Your account details</strong><p>Your profile is managed securely by the store account service.</p></div>
+          <section className="profile-orders">
+            <div className="profile-orders-heading">
+              <div><span className="eyebrow">YOUR PURCHASES</span><h2>Recent orders.</h2></div>
+              {orders.length > 0 && <button className="text-link profile-view-orders" onClick={() => onNavigate('/orders')}>View all →</button>}
+            </div>
+            {orders.length ? orders.slice(0, 3).map((order) => (
+              <button className="profile-order" key={order.id} onClick={() => onNavigate(`/orders/${encodeURIComponent(order.id)}`)}>
+                <span><strong>#{order.id.slice(0, 8).toUpperCase()}</strong><small>{order.date} · {(order.fulfillment_status || 'unfulfilled').replaceAll('_', ' ')}</small></span>
+                <span><strong>{formatPrice(order.total)}</strong><small>{order.status} · Track →</small></span>
+              </button>
+            )) : (
+              <div className="profile-orders-empty"><p>Your order history will show up here.</p><button className="text-link" onClick={() => onNavigate('/products')}>Explore the collection →</button></div>
+            )}
+          </section>
         </section>
       </div>
     </main>
