@@ -19,8 +19,10 @@
         <nav>
             <a href="#" class="nav-link active" data-page="dashboard">⌂ Dashboard</a>
             <a href="#" class="nav-link" data-page="announcements">▤ Announcements</a>
+            <a href="#" class="nav-link" data-page="lecturerDashboard">♙ Lecturer Dashboard</a>
             <a href="#" class="nav-link" data-page="timetable">▦ Timetable</a>
             <a href="#" class="nav-link" data-page="events">◷ Events</a>
+            <a href="#" class="nav-link" data-page="messaging">✉ Messaging</a>
             <a href="#" class="nav-link" data-page="resources">▣ Resources</a>
             <a href="#" class="nav-link" data-page="lost">⌕ Lost & Found</a>
             <a href="#" class="nav-link" data-page="profile">♙ My Profile</a>
@@ -35,7 +37,9 @@
     <main class="main-content">
 
         <header class="topbar">
-            <button id="menuBtn" class="menu-btn">☰</button>
+            <button id="menuBtn" class="menu-btn" type="button"
+                    aria-label="Toggle navigation" aria-expanded="false"
+                    aria-controls="sidebar">☰</button>
             <div>
                 <h3>Student Portal</h3>
                 <small>University Companion</small>
@@ -43,9 +47,11 @@
 
             <div class="top-actions">
                 <input type="search" id="searchInput"
-                       placeholder="Search campus...">
-                <button id="notificationBtn">♧</button>
-                <div class="avatar">S</div>
+                       placeholder="Search campus..."
+                       aria-label="Search campus sections">
+                <button id="notificationBtn" type="button"
+                        aria-label="View announcements">♧</button>
+                <div class="avatar" id="avatar" aria-label="Student profile">S</div>
             </div>
         </header>
 
@@ -54,11 +60,11 @@
             <div class="welcome">
                 <div>
                     <p class="subtitle">YOUR STUDENT SPACE</p>
-                    <h1>Welcome back, Student!</h1>
+                    <h1 id="welcomeHeading">Welcome back, Student!</h1>
                     <p>Make today count. Explore your campus.</p>
                 </div>
 
-                <span class="date">4 November 2026</span>
+                <span class="date" id="dateDisplay"></span>
             </div>
 
             <div class="hero">
@@ -134,7 +140,7 @@
                     <h2>Upcoming Events</h2>
 
                     <div class="event">
-                        <strong>06 NOV</strong>
+                        <strong>10 NOV</strong>
                         <div>
                             <h4>Student Tech Meetup</h4>
                             <p>Innovation Hub · 2 PM</p>
@@ -161,6 +167,127 @@
             </div>
         </section>
 
+        <section id="lecturerDashboard" class="page">
+            <div class="welcome">
+                <div>
+                    <p class="subtitle">LECTURER WORKSPACE</p>
+                    <h1>Teaching Dashboard</h1>
+                    <p>Share course materials and keep your classes informed.</p>
+                </div>
+                <span class="date">Class tools</span>
+            </div>
+
+            <div id="lecturerAuthStatus" class="message-status" role="status"
+                 aria-live="polite"></div>
+            <button id="lecturerPendingSignOutButton" class="text-button"
+                    type="button" hidden>Sign out</button>
+
+            <div id="lecturerSetup" class="panel" hidden>
+                <h2>Lecturer services need setup</h2>
+                <p>Connect Campusly to Supabase and run the setup script in
+                   <code>supabase/messaging.sql</code> to enable lecturer accounts and shared class tools.</p>
+            </div>
+
+            <div id="lecturerAuth" class="panel">
+                <h2 id="lecturerAuthHeading">Lecturer sign in</h2>
+                <form id="lecturerAuthForm">
+                    <div id="lecturerNameField" hidden>
+                        <label for="lecturerName">Full name</label>
+                        <input id="lecturerName" name="name" autocomplete="name"
+                               maxlength="100">
+                    </div>
+                    <label for="lecturerEmail">Campus email</label>
+                    <input id="lecturerEmail" name="email" type="email"
+                           autocomplete="email" required>
+                    <label for="lecturerPassword">Password</label>
+                    <input id="lecturerPassword" name="password" type="password"
+                           autocomplete="current-password" minlength="8"
+                           required>
+                    <button id="lecturerAuthSubmit" type="submit">Sign in</button>
+                </form>
+                <button id="lecturerAuthModeToggle" class="text-button"
+                        type="button">Register as a lecturer</button>
+            </div>
+
+            <div id="lecturerWorkspace" hidden>
+                <div class="panel lecturer-storage-note">
+                    <strong>Shared lecturer workspace</strong>
+                    <p>Your assignments and class announcements are available to campus members through the connected Supabase project.</p>
+                </div>
+                <div class="panel messaging-account">
+                    <p id="lecturerAccountLabel"></p>
+                    <button id="lecturerSignOutButton" class="text-button"
+                            type="button">Sign out</button>
+                </div>
+
+                <div class="stats lecturer-stats">
+                    <div class="stat-card">
+                        <span>▣</span>
+                        <h3 id="assignmentCount">0</h3>
+                        <p>Uploaded Assignments</p>
+                    </div>
+                    <div class="stat-card">
+                        <span>▤</span>
+                        <h3 id="classAnnouncementCount">0</h3>
+                        <p>Class Announcements</p>
+                    </div>
+                </div>
+
+                <div class="content-grid lecturer-grid">
+                <div class="panel">
+                    <h2>Upload an assignment</h2>
+                    <form id="assignmentForm">
+                        <label for="assignmentClass">Class or course</label>
+                        <input id="assignmentClass" name="class" maxlength="100"
+                               placeholder="e.g. Computer Science 201" required>
+
+                        <label for="assignmentTitle">Assignment title</label>
+                        <input id="assignmentTitle" name="title" maxlength="120"
+                               placeholder="e.g. Database design project" required>
+
+                        <label for="assignmentDueDate">Due date</label>
+                        <input id="assignmentDueDate" name="dueDate" type="date">
+
+                        <label for="assignmentFile">Assignment file (up to 10 MB)</label>
+                        <input id="assignmentFile" name="file" type="file" required>
+
+                        <button type="submit">Upload assignment</button>
+                    </form>
+
+                    <div class="lecturer-list-section">
+                        <h3>Uploaded assignments</h3>
+                        <div id="assignmentList" aria-live="polite"></div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2>Announce to a class</h2>
+                    <form id="classAnnouncementForm">
+                        <label for="announcementClass">Class or course</label>
+                        <input id="announcementClass" name="class" maxlength="100"
+                               placeholder="e.g. Computer Science 201" required>
+
+                        <label for="classAnnouncementTitle">Announcement title</label>
+                        <input id="classAnnouncementTitle" name="title" maxlength="120"
+                               placeholder="e.g. Friday lecture moved online" required>
+
+                        <label for="classAnnouncementMessage">Message</label>
+                        <textarea id="classAnnouncementMessage" name="message"
+                                  maxlength="2000" rows="5"
+                                  placeholder="Write the details for your class..." required></textarea>
+
+                        <button type="submit">Post announcement</button>
+                    </form>
+
+                    <div class="lecturer-list-section">
+                        <h3>Recent class announcements</h3>
+                        <div id="lecturerAnnouncementList" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
         <section id="announcements" class="page">
             <h1>Announcements</h1>
             <p>Stay updated with everything happening on campus.</p>
@@ -170,6 +297,14 @@
                 <hr>
                 <h3>Club registration is open</h3>
                 <p>Register and become part of a community.</p>
+                <h3>Class announcements</h3>
+                <p id="classAnnouncementStatus" class="form-hint"
+                   role="status" aria-live="polite"></p>
+                <div id="classAnnouncementList" aria-live="polite"></div>
+                <h3>Shared assignments</h3>
+                <p id="sharedAssignmentStatus" class="form-hint"
+                   role="status" aria-live="polite"></p>
+                <div id="sharedAssignmentList" aria-live="polite"></div>
             </div>
         </section>
 
@@ -223,22 +358,22 @@
             <div class="event-list">
                 <div class="panel">
                     <h3>Student Tech Meetup</h3>
-                    <p>6 November · Innovation Hub · 2 PM</p>
-                    <button onclick="saveEvent('Student Tech Meetup')">
+                    <p>10 November · Innovation Hub · 2 PM</p>
+                    <button type="button" data-event="Student Tech Meetup">
                         Register Interest
                     </button>
                 </div>
                 <div class="panel">
                     <h3>Sports Day</h3>
                     <p>9 November · Main Field · 9 AM</p>
-                    <button onclick="saveEvent('Sports Day')">
+                    <button type="button" data-event="Sports Day">
                         Register Interest
                     </button>
                 </div>
                 <div class="panel">
                     <h3>Business Forum</h3>
                     <p>12 November · Lecture Hall · 10 AM</p>
-                    <button onclick="saveEvent('Business Forum')">
+                    <button type="button" data-event="Business Forum">
                         Register Interest
                     </button>
                 </div>
@@ -259,18 +394,93 @@
             </div>
         </section>
 
+        <section id="messaging" class="page">
+            <h1>Student &amp; Lecturer Messaging</h1>
+            <p>Have a private conversation with a student or lecturer.</p>
+
+            <div id="messagingStatus" class="message-status" role="status"
+                 aria-live="polite"></div>
+
+            <div id="messagingSetup" class="panel" hidden>
+                <h2>Messaging setup required</h2>
+                <p>Connect this app to Supabase to enable shared messaging.</p>
+                <p>Follow the setup guide in <code>supabase/setup.md</code>.</p>
+            </div>
+
+            <div id="messagingAuth" class="panel" hidden>
+                <h2 id="authHeading">Sign in to messaging</h2>
+                <form id="authForm">
+                    <div id="signupNameField" hidden>
+                        <label for="signupName">Full name</label>
+                        <input id="signupName" name="name" autocomplete="name"
+                               maxlength="100">
+                    </div>
+                    <label for="authEmail">Email</label>
+                    <input id="authEmail" name="email" type="email"
+                           autocomplete="email" required>
+                    <label for="authPassword">Password</label>
+                    <input id="authPassword" name="password" type="password"
+                           autocomplete="current-password" minlength="8"
+                           required>
+                    <button id="authSubmit" type="submit">Sign in</button>
+                </form>
+                <button id="authModeToggle" class="text-button" type="button">
+                    Create an account
+                </button>
+            </div>
+
+            <div id="messagingWorkspace" hidden>
+                <div class="panel messaging-account">
+                    <p id="accountLabel"></p>
+                    <button id="signOutButton" class="text-button" type="button">
+                        Sign out
+                    </button>
+                </div>
+                <div class="message-layout">
+                    <aside class="panel conversation-panel">
+                        <h2>Conversations</h2>
+                        <label for="recipientSelect">Start a conversation</label>
+                        <select id="recipientSelect">
+                            <option value="">Choose a recipient</option>
+                        </select>
+                        <button id="startConversationButton" type="button">
+                            Start conversation
+                        </button>
+                        <div id="conversationList" class="conversation-list"
+                             aria-label="Your conversations"></div>
+                    </aside>
+                    <section class="panel message-thread"
+                             aria-label="Message thread">
+                        <p id="threadPrompt" class="empty-state">
+                            Select a conversation or start a new one.
+                        </p>
+                        <div id="messageList" class="message-list"
+                             aria-live="polite"></div>
+                        <form id="messageForm" hidden>
+                            <label class="visually-hidden" for="messageInput">
+                                Write a message
+                            </label>
+                            <textarea id="messageInput" maxlength="4000"
+                                      placeholder="Write a message..." required></textarea>
+                            <button type="submit">Send message</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </section>
+
         <section id="lost" class="page">
             <h1>Lost & Found</h1>
             <p>Help students find their missing belongings.</p>
 
             <form id="lostForm" class="panel">
-                <label>Item name</label>
+                <label for="itemName">Item name</label>
                 <input id="itemName" required placeholder="e.g. Black backpack">
 
-                <label>Location</label>
+                <label for="itemLocation">Location</label>
                 <input id="itemLocation" required placeholder="Where was it lost/found?">
 
-                <label>Contact</label>
+                <label for="itemContact">Contact</label>
                 <input id="itemContact" required placeholder="Your contact">
 
                 <button type="submit">Post Notice</button>
@@ -282,13 +492,13 @@
         <section id="profile" class="page">
             <h1>My Profile</h1>
             <form id="profileForm" class="panel">
-                <label>Full name</label>
+                <label for="studentName">Full name</label>
                 <input id="studentName" required placeholder="Your name">
 
-                <label>Course</label>
+                <label for="studentCourse">Course</label>
                 <input id="studentCourse" placeholder="Your course">
 
-                <label>Year of study</label>
+                <label for="studentYear">Year of study</label>
                 <select id="studentYear">
                     <option>Year 1</option>
                     <option>Year 2</option>
@@ -307,6 +517,8 @@
     </main>
 </div>
 
+<button id="sidebarBackdrop" class="sidebar-backdrop" type="button"
+        aria-label="Close navigation"></button>
 <div id="toast" class="toast"></div>
 <script src="../script/script.js"></script>
 </body>
